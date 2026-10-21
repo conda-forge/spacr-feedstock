@@ -1,13 +1,13 @@
 schema_version: 1
 context:
-  version: 1.5.1.2
+  version: 1.5.1.0
   python_min: '3.11'
 package:
   name: spacr
   version: ${{ version }}
 source:
   url: https://pypi.org/packages/source/s/spacr/spacr-${{ version }}.tar.gz
-  sha256: d7bb89fb348895dcf5979d6a7d0fe9315aa2f0dca51fa4d7bef5c1254a4cad0c
+  sha256: 013c6617d59e26ed54f9132bb906c2677e1c2fbfe878ab8d8f651d00c6dd69ff
 build:
   number: 0
   noarch: python
@@ -45,7 +45,6 @@ requirements:
   - scipy <2.0,>=1.12.0
   - cellpose <5.0,>=4.0.7
   - scikit-image <0.28,>=0.22.0
-  - pywavelets <2,>=1.4
   - scikit-learn <2.0,>=1.5.0
   - scikit-posthocs <0.20,>=0.10.0
   - trackpy <1.0,>=0.6.2
