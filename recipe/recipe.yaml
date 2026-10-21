@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "1.5.1.4"
+  version: "1.5.1.5"
   python_min: "3.11"
 
 package:
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/s/spacr/spacr-${{ version }}.tar.gz
-  sha256: 32113621263f931862d5ab63fb507819d2172276edb3bfdf42210bf3e7eea7bb
+  sha256: 4b3ec55b0140df6f34256e20927228b9deab4da0a17ea7e1abafcab36143e323
 
 build:
   number: 0
@@ -79,6 +79,8 @@ requirements:
     - pyqtgraph >=0.13.3,<1
     - mpmath >=1.3,<2
     - vispy >=0.14,<1.0
+    - pyopengl >=3.1.7,<4
+    - wgpu-py >=0.25,<0.33
     - adjusttext >=1.2.0,<2.0
     - bottleneck >=1.3.6,<2.0
     - numexpr >=2.8.4,<3.0
@@ -101,6 +103,7 @@ requirements:
     - fastremap >=1.14.1
     - tqdm >=4.65.0
     - requests >=2.28,<3.0
+    - paramiko >=3.5,<5
     - joblib >=1.2,<2.0
     - natsort >=8.0,<9.0
     - sympy >=1.12,<2.0
@@ -110,7 +113,7 @@ requirements:
     - protobuf >=5.28.3
     # The conda package exposes the desktop entry point, so its GUI runtime
     # must be explicit rather than relying on cellpose to pull a Qt binding.
-    - pyside6 >=6.6,<7
+    - pyside6 >=6.6,<7,!=6.12.0
     - qtawesome >=1.3,<2
 
 tests:
