@@ -1,58 +1,58 @@
 schema_version: 1
 context:
-  version: 1.5.0.2
+  version: 1.5.0.5
   python_min: '3.11'
 package:
   name: spacr
   version: ${{ version }}
 source:
   url: https://pypi.org/packages/source/s/spacr/spacr-${{ version }}.tar.gz
-  sha256: 6fd70dee143b2f594c9769dda3502f0a58a8c4845b7f37140c71a9ad262d0cbe
+  sha256: a5631f0462f044985607ad211415ffbf08c7c34ae02ba2b245d845bd40fad5bc
 build:
   number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   python:
     entry_points:
-    - annotate = spacr.app_annotate:start_annotate_app
-    - classify = spacr.app_classify:start_classify_app
-    - make_masks = spacr.app_make_masks:gui_make_masks
-    - mask = spacr.app_mask:start_mask_app
-    - measure = spacr.app_measure:start_measure_app
-    - spaceout = spacr.gui:gui_app
+    - safespacr = spacr.qt.safespacr:main
+    - spaceout = spacr.qt.spaceout:main
     - spacr = spacr.qt:run
     - spacr-db-audit = spacr.cli_database:main
     - spacr-doctor = spacr.doctor:main
+    - spacr-download = spacr.cli_download:main
     - spacr-leakage = spacr.cli_leakage:main
-    - spacr-legacy = spacr.gui:gui_app
     - spacr-nightly = spacr.qt:run
     - spacr-plugins = spacr.cli_plugins:main
     - spacr-qt = spacr.qt:run
     - spacr-remote = spacr.cli_remote:main
     - spacr-repro = spacr.cli_repro:main
     - spacr-run = spacr.cli:main
-    - spacr-tk = spacr.gui:gui_app
+    - spacr-server = spacr.qt:run_without_setup
     - spacr-tutorial = spacr.qt.tutorial.__main__:main
+    - spacr-workspace = spacr.cli_workspace:main
 requirements:
   host:
   - python ${{ python_min }}.*
   - pip
-  - setuptools >=64
+  - setuptools >=77
   - wheel
   run:
-  - python !=3.14.1,<3.15,>=${{ python_min }}
+  - python !=3.14.1,<3.16,>=${{ python_min }}
   - numpy <3.0,>=1.26.4
-  - pandas <3.0,>=2.2.1
+  - pandas <4.0,>=2.2.1
   - scipy <2.0,>=1.12.0
-  - cellpose <5.0,>=4.0
+  - cellpose <5.0,>=4.0.7
   - scikit-image <0.28,>=0.22.0
   - scikit-learn <2.0,>=1.5.0
   - scikit-posthocs <0.20,>=0.10.0
   - trackpy <1.0,>=0.6.2
-  - statsmodels <0.15,>=0.13.0
+  - statsmodels <0.15,>=0.14.0
   - patsy <2.0,>=0.5.6
-  - shap <1.0,>=0.45.0
+  - shap <1.0,>=0.47.0
   - pytorch <3.0,>=2.0
+  - pyfixest <1,>=0.40.1
+  - glum <4,>=3.1.2
+  - gpytorch <2,>=1.11
   - tensorboard <3.0,>=2.21
   - numba <1.0,>=0.60
   - llvmlite <1.0,>=0.43
@@ -61,6 +61,13 @@ requirements:
   - seaborn <1.0,>=0.13.2
   - matplotlib-base <4.0,>=3.8.3
   - matplotlib-venn <2.0,>=1.1
+  - pypdf <7.0,>=6.16.1
+  - cycler <1,>=0.10
+  - pyside6 <7,>=6.6
+  - qtawesome <2,>=1.3
+  - pyqtgraph <1,>=0.13.3
+  - mpmath <2,>=1.3
+  - vispy <1.0,>=0.14
   - adjusttext <2.0,>=1.2.0
   - bottleneck <2.0,>=1.3.6
   - numexpr <3.0,>=2.8.4
@@ -72,14 +79,13 @@ requirements:
   - readlif
   - openpyxl <4.0,>=3.1
   - imageio <3.0,>=2.34.0
-  - pingouin <0.6,>=0.5.5
   - umap-learn <1.0,>=0.5.11
   - xgboost <4,>=2.0.3
   - biopython <2.0,>=1.80
   - lxml >=5.1.0
   - psutil <8,>=5.9.8
   - gputil <2.0,>=1.4.0
-  - nvidia-ml-py <14,>=11.5
+  - nvidia-ml-py <14,>=11.450.51
   - pytables <4.0,>=3.8.0
   - screeninfo <1.0,>=0.8.1
   - fastremap >=1.14.1
@@ -92,8 +98,6 @@ requirements:
   - ipywidgets <9.0,>=8.1.2
   - huggingface_hub <1.0,>=0.25
   - protobuf >=5.28.3
-  - pyside6 <7,>=6.6
-  - qtawesome <2,>=1.3
   - segment-anything >=1.0,<2.0
 tests:
 - python:
@@ -110,12 +114,12 @@ tests:
     - python ${{ python_min }}.*
   script:
   - python -c "from importlib.metadata import version; import spacr; assert version('spacr') == '${{ version }}'"
-  - python -c "import shutil; names = ('annotate', 'classify', 'make_masks', 'mask', 'measure', 'spaceout', 'spacr', 'spacr-db-audit', 'spacr-doctor', 'spacr-leakage', 'spacr-legacy', 'spacr-nightly', 'spacr-plugins', 'spacr-qt', 'spacr-remote', 'spacr-repro', 'spacr-run', 'spacr-tk', 'spacr-tutorial'); assert all(shutil.which(name) for name in names)"
+  - python -c "import shutil; names = ('safespacr', 'spaceout', 'spacr', 'spacr-db-audit', 'spacr-doctor', 'spacr-download', 'spacr-leakage', 'spacr-nightly', 'spacr-plugins', 'spacr-qt', 'spacr-remote', 'spacr-repro', 'spacr-run', 'spacr-server', 'spacr-tutorial', 'spacr-workspace'); assert all(shutil.which(name) for name in names)"
   - python -c "import cellpose, segment_anything, torch; from spacr import measure; from spacr.qt import run; assert callable(run)"
   - spacr-run --list
 about:
   summary: Spatial phenotype analysis of CRISPR screens
-  license: PolyForm-Noncommercial-1.0.0
+  license: BSD-3-Clause
   license_file: LICENSE
   homepage: https://github.com/EinarOlafsson/spacr
   repository: https://github.com/EinarOlafsson/spacr
