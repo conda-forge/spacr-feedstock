@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "1.5.1.5"
+  version: "1.5.1.6"
   python_min: "3.11"
 
 package:
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/s/spacr/spacr-${{ version }}.tar.gz
-  sha256: 4b3ec55b0140df6f34256e20927228b9deab4da0a17ea7e1abafcab36143e323
+  sha256: b74115ddff22f8e61f0aaed227872051f2cfcc002a5a37e5606a3166a7b6352b
 
 build:
   number: 0
@@ -132,7 +132,8 @@ tests:
         - python ${{ python_min }}.*
     script:
       - python -c "import cellpose, segment_anything, torch; from spacr import measure; from spacr.qt import run; assert callable(run)"
-      - python -c "import shutil; names = ('spacr', 'spacr-qt', 'spacr-nightly', 'spaceout', 'safespacr', 'spacr-server', 'spacr-tutorial', 'spacr-repro', 'spacr-workspace', 'spacr-make-masks', 'spacr-run', 'spacr-download', 'spacr-remote', 'spacr-plugins', 'spacr-leakage', 'spacr-db-audit', 'spacr-doctor'); assert all(shutil.which(name) for name in names)"
+      - python -c "import shutil; names = ('spacr', 'spacr-qt', 'spacr-nightly', 'spaceout', 'safespacr', 'spacr-server', 'spacr-tutorial', 'spacr-repro', 'spacr-workspace', 'spacr-make-masks', 'spacr-run', 'spacr-download', 'spacr-remote', 'spacr-plugins', 'spacr-leakage', 'spacr-db-audit', 'spacr-doctor'); assert 
+        all(shutil.which(name) for name in names)"
       - spacr-run --list
 
 about:
